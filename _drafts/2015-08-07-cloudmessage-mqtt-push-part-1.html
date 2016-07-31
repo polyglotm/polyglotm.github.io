@@ -1,0 +1,13 @@
+---
+layout: post
+title: "[CloudMessage] MQTT push - part 1"
+date: '2015-08-07T00:18:00.000-07:00'
+author: Jaeyoung Lee
+tags:
+- CloudMessage
+modified_time: '2015-08-07T00:18:56.990-07:00'
+blogger_id: tag:blogger.com,1999:blog-5872989675159532416.post-4568640240657017446
+blogger_orig_url: http://polyglot-m.blogspot.com/2015/08/cloudmessage-mqtt-push-part-1.html
+---
+
+1.eclipse paho를 이용한 client 구성<br /><br />2.broker는 elang기반 emqttd 선정<br /><br />https://github.com/emqtt/emqttd 참조.<br /><br /><br />서버 구성시 몇가지 문제들<br /><br />1.publish제한을 어떻게 할 것인가?<br /><br />/etc/acl.config<br /><br />%%%-----------------------------------------------------------------------------<br />%%<br />%% [ACL](https://github.com/emqtt/emqttd/wiki/ACL)<br />%%<br />%% -type who() :: all | binary() |<br />%% &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {ipaddr, esockd_access:cidr()} |<br />%% &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {client, binary()} |<br />%% &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {user, binary()}.<br />%%<br />%% -type access() :: subscribe | publish | pubsub.<br />%%<br />%% -type topic() :: binary().<br />%%<br />%% -type rule() :: {allow, all} |<br />%% &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{allow, who(), access(), list(topic())} |<br />%% &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{deny, all} |<br />%% &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{deny, who(), access(), list(topic())}.<br />%%<br />%%%-----------------------------------------------------------------------------<br /><br /><br /><br />%%{allow, {ipaddr, "172.31.21.242"}, pubsub, ["$SYS/#", "#"]}.<br />&nbsp;{allow, {ipaddr, "127.0.0.1"}, pubsub, ["$SYS/#", "#"]}.<br /><br />&nbsp;%%{deny, all, subscribe, ["$SYS/#", {eq, "#"}]}.<br />&nbsp;%%{deny, all, publish, ["/user/#"]}.<br />&nbsp;%%{deny, all, publish, ["$SYS/#", {eq, "#"}]}.<br />&nbsp;{allow, all, subscribe, ["/user/#", "/hotline/#"]}.<br />&nbsp;{allow, all, publish, ["PING"]}.<br />&nbsp;{deny, all}.<br /><div><br /></div><br /><br /><br /><br /><br />3. 시스템 정보는 어떻게 읽을것인가?<br />https://github.com/emqtt/emqttd/wiki/%24SYS%20Topics<br /><br /><br /><br />4.시스템 정보를 실시간 대쉬보드로 볼수는 없는것인가?<br />https://github.com/emqtt/emqttd_dashboard<br /><br />emqttd 컴파일전에 대시보드 받고 컴파일후<br /><br />/etc/plugins.config에서 dashboard 주석풀고 서버올린후<br />http://localhost:18083/<br />주소로 접근<br /><br /><br /><br class="Apple-interchange-newline" />2. 100만 클라이언트 세팅<br />https://github.com/emqtt/emqttd/wiki/One%20Million%20Connections<br /><div><br /></div>
