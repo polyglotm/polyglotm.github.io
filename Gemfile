@@ -13,7 +13,6 @@ gem "jekyll", "3.1.6"
 gem "html-proofer"
 
 # This is the default theme for new Jekyll sites. You may change this to anything you like.
-gem "minima"
 
 # If you want to use GitHub Pages, remove the "gem "jekyll"" above and
 # uncomment the line below. To upgrade, run `bundle update github-pages`.
@@ -24,12 +23,6 @@ gem "minima"
 #   gem "jekyll-github-metadata", "~> 1.0"
 # end
 #
-#
-#
-require 'json'
-require 'open-uri'
-versions = JSON.parse(open('https://pages.github.com/versions.json').read)
 
-gem 'github-pages', versions['github-pages']
-# gem 'github-pages'
+gem 'github-pages'
 
