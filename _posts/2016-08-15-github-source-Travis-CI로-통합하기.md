@@ -17,7 +17,7 @@ jekyll을 사용함으로써category나 tags기능을 사용하여
 
 에러메일과 함께 난항에 빠졌습니다.
 
-![CI가 필요해!]({{ site.url }}/assets/images/2016-08-08-10-32-43.png)
+![CI가 필요해!](/assets/images/2016-08-08-10-32-43.png)
 
 네.
 깃허브 블로그 하는데 내친김에 Travis CI까지 바로 하기로 합니다.
@@ -26,18 +26,19 @@ jekyll을 사용함으로써category나 tags기능을 사용하여
 
 이 document대로 해서 한방에 됬더라면 얼마나 좋았을까요!
 
-
 ### step 1. ./script/cibuild 파일 추가
-#### Key Point! 'bundle exec install'이 필요합니다!
 
 ```
 #!/usr/bin/env bash
 set -e # 에러 발생 시 스크립트 중단
 
-bundle exec install
 bundle exec jekyll build
-bundle exec htmlproof ./_site
+bundle exec htmlproofer ./_site
 ```
+공식 번역 문서에는 
+**htmlproof** 라고 되어있지만 **htmlproofer** 가 맞습니다!
+>번역 문서가 아니라 원본 문서에는 **htmlproofer**로 되어 있습니다!
+
 
 ### step 2. Gemfile에 'html-proofer' gem 추가
 
@@ -47,10 +48,9 @@ gem "html-proofer"
 
 ### step 2. .travis.yml 파일 추가
 >username.io repository를 사용하는경우
-branches 옵션을 2번과같이 주석처리 하세요!
+branches 옵션을 아래와같이 주석처리 하세요!
 
-
-#### project gh-pages branch를 사용하는 경우
+#### username.io master branch를 사용하는 경우
 ```
 language: ruby
 rvm:
@@ -75,7 +75,7 @@ env:
 
 ```
 
-#### username.io master branch를 사용하는 경우
+#### project gh-pages branch를 사용하는 경우
 ```
 language: ruby
 rvm:
@@ -99,3 +99,12 @@ env:
   - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # html-proofer 의 설치 속도를 높여줌
 
 ```
+
+네 하지만 아래 보다시피 10번넘는 빌드 실패!
+
+![travisCI-build-failed](/assets/images/2016-08-15-04-13-03.png)
+
+![blogger-migration-to-jekyll](/assets/images/2016-08-15-04-11-08.png)
+
+원인은 바로 blogger에서 migration한 글들이었습니다!.
+결국 모든 이미지를 하나씩 긁어와야겠군요...ㅠㅠ
