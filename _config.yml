@@ -13,7 +13,6 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-exclude: [vendor]
 title: polyglot.m blog
 email: polyglot.m@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
@@ -21,7 +20,7 @@ description: > # this means to ignore newlines until "baseurl:"
   line in _config.yml. It will appear in your document head meta (for
   Google search results) and in your feed.xml site description.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://polyglotm.github.id" # the base hostname & protocol for your site
+url: "http://polyglotm.github.io" # the base hostname & protocol for your site
 # twitter_username: polyglotm
 github_username: polyglotm
 
@@ -50,3 +49,5 @@ collections:
     output: true
     # permalink: /awesome/:path/
 
+sass:
+    sass_dir: _sass
